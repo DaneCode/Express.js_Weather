@@ -5,16 +5,20 @@ const bodyParser = require("body-parser");
 
 app.use(bodyParser.urlencoded({extended: true}))
 
+// function to redirect to the index page
 app.get("/", function(req, res){
   res.sendFile(__dirname + "/index.html");
 });
 
+// Post request take the city name input and calls data from openweathermap
 app.post("/", function(req, res){
   const query = req.body.cityName;
-  const apiKey = "259a575b88a5aa7f5f754e59958903a8";
+  // this app uses Open Weather Map for its source of data. Signup there to get api key
+  const apiKey = "api_key";
+  // this can be changed to metric if you want the temp in celc
   const unit = "imperial";
   const url = "https://api.openweathermap.org/data/2.5/weather?q=" + query + ",US&appid="+ apiKey +"&units=" + unit;
-
+  // this is the get request that parses the data and writes it to the page
   https.get(url, function(response){
     response.on("data", function(data){
       const weatherData = JSON.parse(data);
@@ -31,7 +35,7 @@ app.post("/", function(req, res){
 })
 
 
-
+// listening to port 3000
 app.listen(3000, function() {
   console.log("Server is Running On Port 3000!")
 })
