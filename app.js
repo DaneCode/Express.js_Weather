@@ -1,9 +1,12 @@
 const express = require("express");
-const app = express();
 const https = require("https");
+require('dotenv').config();
 const bodyParser = require("body-parser");
-
-app.use(bodyParser.urlencoded({extended: true}))
+const app = express();
+const PORT=process.env.PORT
+const openWeatherAPI=process.env.openWeatherAPI
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname + '/public'));
 
 // function to redirect to the index page
 app.get("/", function(req, res){
@@ -14,7 +17,7 @@ app.get("/", function(req, res){
 app.post("/", function(req, res){
   const query = req.body.cityName;
   // this app uses Open Weather Map for its source of data. Signup there to get api key
-  const apiKey = "api_key";
+  const apiKey = openWeatherAPI;
   // this can be changed to metric if you want the temp in celc
   const unit = "imperial";
   const url = "https://api.openweathermap.org/data/2.5/weather?q=" + query + ",US&appid="+ apiKey +"&units=" + unit;
@@ -36,6 +39,6 @@ app.post("/", function(req, res){
 
 
 // listening to port 3000
-app.listen(3000, function() {
-  console.log("Server is Running On Port 3000!")
+app.listen(PORT, function() {
+  console.log("Server is Running!")
 })
