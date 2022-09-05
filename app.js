@@ -3,19 +3,26 @@ const https = require("https");
 require('dotenv').config();
 const bodyParser = require("body-parser");
 const app = express();
+app.use(bodyParser.urlencoded({extended: true}));
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + '/public'));
+
+var items = [];
+
+// port number and api key in hidden file
 const PORT=process.env.PORT
 const openWeatherAPI=process.env.openWeatherAPI
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/public'));
 
 // function to redirect to the index page
 app.get("/", function(req, res){
-  res.sendFile(__dirname + "/index.html");
+  res.render("list", {listItems: items})
 });
 
 // Post request take the city name input and calls data from openweathermap
 app.post("/", function(req, res){
+  items = [];
   const query = req.body.cityName;
+  items.push(query);
   // this app uses Open Weather Map for its source of data. Signup there to get api key
   const apiKey = openWeatherAPI;
   // this can be changed to metric if you want the temp in celc
@@ -29,14 +36,13 @@ app.post("/", function(req, res){
       const weatherDescription = weatherData.weather[0].description;
       const icon = weatherData.weather[0].icon
       const imageURL = 'http://openweathermap.org/img/wn/' + icon + "@2x.png"
-      res.write("<h1>The temperature in " + query + " is " + temp + " Degrees Fahrenheit</h1>");
-      res.write("<h1>The weather is currently " + weatherDescription + ".</h1>");
-      res.write("<img src="+imageURL+">");
-      res.send();
+      items.push(temp);
+      items.push(weatherDescription);
+      items.push(imageURL);
+      res.redirect("/");
     })
   });
 })
-
 
 // listening to port 3000
 app.listen(PORT, function() {

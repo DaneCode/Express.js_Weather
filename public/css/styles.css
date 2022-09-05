@@ -1,3 +1,4 @@
+
 html {
   background-color: #CFFFDC;
   background-image: -webkit-linear-gradient(30deg, #CFFFDC 50%, #93FFD8 50%);
@@ -53,4 +54,20 @@ label {
 .input {
   position: absolute;
   top: 30%;
+}
+.result {
+
+  text-align: center;
+  border: none;
+  background: transparent;
+}
+.result-box {
+  position: absolute;
+  top: 44%;
+  left: 35.5%;
+}
+.result-text {
+  font-size: 2rem;
+  font-weight: 200;
+
 }
