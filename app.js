@@ -14,12 +14,12 @@ const PORT=process.env.PORT
 const openWeatherAPI=process.env.openWeatherAPI
 
 // function to redirect to the index page
-app.get("/", function(req, res){
+app.get("/", (req, res) => {
   res.render("list", {listItems: items})
 });
 
 // Post request take the city name input and calls data from openweathermap
-app.post("/", function(req, res){
+app.post("/", (req, res) => {
   items = [];
   const query = req.body.cityName;
   items.push(query);
@@ -29,7 +29,7 @@ app.post("/", function(req, res){
   const unit = "imperial";
   const url = "https://api.openweathermap.org/data/2.5/weather?q=" + query + ",US&appid="+ apiKey +"&units=" + unit;
   // this is the get request that parses the data and writes it to the page
-  https.get(url, function(response){
+  https.get(url, (response) => {
     response.on("data", function(data){
       const weatherData = JSON.parse(data);
       const temp = weatherData.main.temp;

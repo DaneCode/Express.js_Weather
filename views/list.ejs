@@ -7,27 +7,25 @@
     <link rel="stylesheet" type="text/css" href="css/styles.css" />
   </head>
   <body>
-      <div class="d-flex justify-content-center">
-        <h1>Weather Forcast</h1>
-      </div>
+      <!-- <div class="d-flex justify-content-center">
+
+      </div> -->
     <div class="d-flex justify-content-center">
+              <h1>Weather Forcast</h1>
       <div class="input">
         <form action="/" method="post">
-          <label for="cityInput">City Name: </label>
+          <label class="inputText" for="cityInput">City Name: </label>
           <input class="box" id="cityInput" type="text" name="cityName">
           <button type="submit">Go</button>
         </form>
+        <ul class="result bg-transparent" id="myList" class="list-group">
+          <% if (listItems.length == 4) { %>
+          <li class="list-group-item bg-transparent result-text">The temperature in <%= listItems[0] + " is " + listItems[1]%>% fahrenheit.</li>
+          <li class="list-group-item bg-transparent result-text">The weather is currently <%= listItems[2] %>.</li>
+          <img src=<%= listItems[3] %> alt="">
+          <% } %>
+        </ul>
       </div>
-    </div>
-    <div class="row result-box">
-    <div class="col-sm-12 center-div">
-      <ul class="result bg-transparent" id="myList" class="list-group">
-        <% if (listItems.length == 4) { %>
-        <li class="list-group-item bg-transparent result-text">The temperature in <%= listItems[0] + " is " + listItems[1]%>% fahrenheit.</li>
-        <li class="list-group-item bg-transparent result-text">The weather is currently <%= listItems[2] %>.</li>
-        <img src=<%= listItems[3] %> alt="">
-        <% } %>
-      </ul>
     </div>
   </body>
 </html>
